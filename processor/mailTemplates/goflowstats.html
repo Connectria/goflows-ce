@@ -1,0 +1,161 @@
+<!-- standard.html -->
+<!DOCTYPE html>
+<html>
+<body>
+<h3>{{.Subject}}</h3>
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-color:#9ABAD9;border-spacing:0;}
+.tg td{background-color:#EBF5FF;border-color:#9ABAD9;border-style:solid;border-width:0px;color:#444;
+  font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{background-color:#409cff;border-color:#9ABAD9;border-style:solid;border-width:0px;color:#fff;
+  font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-ir4y{font-size:12px;font-weight:bold;text-align:center;vertical-align:top}
+.tg .tg-d8uj{font-family:"Courier New", Courier, monospace !important;;font-size:12px;text-align:right;vertical-align:top}
+.tg .tg-d8uk{font-family:"Courier New", Courier, monospace !important;;font-size:12px;text-align:left;vertical-align:top}
+</style>
+
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ir4y">GoFlows Job Processing</th>
+    <th class="tg-ir4y">Count</th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+  <tr>
+    <td class="tg-d8uj">Jobs created</td>
+    <td class="tg-d8uj">{{.JobsCreated}}</td>
+  </tr>
+  <tr>
+    <td class="tg-d8uj">Jobs running</td>
+    <td class="tg-d8uj">{{.JobsRunning}}</td>
+  </tr>
+  <tr>
+    <td class="tg-d8uj">Jobs failed</td>
+    <td class="tg-d8uj">{{.JobsFailed}}</td>
+  </tr>
+  <tr>
+    <td class="tg-d8uj">Jobs sucessful</td>
+    <td class="tg-d8uj">{{.JobsSuccessful}}</td>
+  </tr>
+</tbody>
+</table>
+
+<br><hr><br>
+
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ir4y">OpsGeneie Event Processing</th>
+    <th class="tg-ir4y">Count</th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr>
+    <td class="tg-d8uj">OpsGenie events received by reader</td>
+    <td class="tg-d8uj">{{.EventsReceived }}</td>
+  </tr>
+  <tr>
+    <td class="tg-d8uj">OpsGenie events the reader rejected</td>
+    <td class="tg-d8uj">{{.EventsReaderRejected}}</td>
+  </tr>
+  <tr>
+    <td class="tg-d8uj">OpsGenie events the processor rejected</td>
+    <td class="tg-d8uj">{{.EventsProcessorRejected}}</td>
+  </tr>
+  <tr>
+    <td class="tg-d8uj">OpsGenie events evaluated against trigger rules</td>
+    <td class="tg-d8uj">{{.EventsEvaluated}}</td>
+  </tr>
+  <tr>
+    <td class="tg-d8uj">OpsGenie events that matched trigger rules </td>
+    <td class="tg-d8uj">{{.EventsMatching}}</td>
+  </tr>
+</tbody>
+</table>
+
+<br><hr><br>
+
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ir4y">OpsGenie Event Trigger</th>
+    <th class="tg-ir4y">ID</th>
+    <th class="tg-ir4y">count</th>
+  </tr>
+</thead>
+<tbody>
+
+{{ with .EventTriggerList }}
+  {{ range . }}
+    <tr>
+      <td class="tg-d8uj">{{ .Name }}</td>
+      <td class="tg-d8uj">{{ .ID }}</td>
+      <td class="tg-d8uj">{{ .Count }}</td>
+    </tr>
+  {{end}}
+{{end}}
+
+</tbody>
+</table>
+
+<br><hr><br>
+
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ir4y">Scheduler Trigger</th>
+    <th class="tg-ir4y">ID</th>
+    <th class="tg-ir4y">count</th>
+  </tr>
+</thead>
+<tbody>
+
+{{ with .SchedulerTriggerList }}
+  {{ range . }}
+    <tr>
+      <td class="tg-d8uj">{{ .Name }}</td>
+      <td class="tg-d8uj">{{ .ID }}</td>
+      <td class="tg-d8uj">{{ .Count }}</td>
+    </tr>
+  {{end}}
+{{end}}
+
+</tbody>
+</table>
+
+
+{{ if .JobsWithErrors }}
+<br><hr><br>
+
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-ir4y">Job ID With Error</th>
+    <th class="tg-ir4y">Error Message</th>
+  </tr>
+</thead>
+<tbody>
+
+{{ with .JobsWithErrors }}
+  {{ range . }}
+    <tr>
+      <td class="tg-d8uj">{{ .ID }}</td>
+      <td class="tg-d8uk">{{ .Message }}</td>
+    </tr>
+  {{end}}
+{{end}}
+
+</tbody>
+</table>
+
+{{ end }} 
+
+<br> <hr> <br>
+<i>GoFlows job counts include jobs initated by the GoFlows scheduler as well as the OpsGenie events that matched rules. Date range is {{ .HumanRange }}.</i>
+</body>
+</html>
