@@ -1,0 +1,4 @@
+.env
+*.out
+goflows-scheduler
+/docs/build/
