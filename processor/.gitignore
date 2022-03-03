@@ -1,0 +1,12 @@
+reference/
+sandbox/
+bootswatch/
+
+goflows-processor 
+.env 
+*.out
+
+.scannerwork/
+sonar-project.properties
+
+.vscode
