@@ -1,0 +1,636 @@
+openapi: '3.0.2'
+
+info:
+  title: "GoFlows Frontend"
+  description: "goflows_frontend"
+  version: "1.0"
+  contact:
+    name: "Aaron Albertina"
+    email: "aalbertina@connectria.com"
+
+
+servers:
+  - url: "http://goflows.skyline.connpriv.com/"
+    description: "Development"
+
+paths:
+  /api/flows:
+    get:
+      tags:
+      - flows
+      summary: "Get all Flows"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                properties:
+                  flows:
+                    type: array
+                    items:
+                      properties:
+                        flowId:
+                          type: string
+                          example: "172e493f-f0ef-4d6e-9db5-ccd62757f36d"
+                        flowName:
+                          type: string
+                          example: "test_update"
+
+    delete:
+      tags:
+      - flows
+      summary: "Delete All Flows"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                properties:
+                  DELETED:
+                    type: string
+                    example: "All Flows!"
+
+    post:
+      tags:
+        - flows
+      summary: Create New Flow
+      requestBody:
+        description: "The flow to create"
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                flowName:
+                  type: string
+                  example: "Test Flow"
+                flowShortDescription:
+                  type: string
+                  example: "Short Desc of a Flow"
+                flowDescription:
+                  type: string
+                  example: "Full Desc of a Flow"
+                flowInputs:
+                  type: array
+                  items:
+                    type: string
+                  example: [{ "inputName": "a", "inputType": "string","inputDescription": "gemmedat" }]
+                flowDocument:
+                  type: string
+                  example: {"foo": [1, 2, 3]}
+
+      responses:
+        200:
+          description: "Good"
+          content:
+            application/json:
+              schema:
+                properties:
+                  items:
+                    "$ref": "#/components/schemas/Flows"
+
+  /api/flows/{flowId}:
+    get:
+      tags:
+      - flows
+      parameters:
+       - name: flowId
+         in: path
+         required: true
+         schema:
+           type: string
+
+      summary: "Get One Flow"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Flows"
+    delete:
+      tags:
+      - flows
+      parameters:
+       - name: flowId
+         in: path
+         required: true
+         schema:
+           type: string
+
+      summary: "Delete One Flow"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                properties:
+                  DELETED:
+                    type: string
+                    example: "172e493f-f0ef-4d6e-9db5-ccd62757f36d"
+    put:
+      tags:
+        - flows
+      parameters:
+       - name: flowId
+         in: path
+         required: true
+         schema:
+           type: string
+      summary: Update a Flow
+      requestBody:
+        description: "The Flow to Update"
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                flowName:
+                  type: string
+                  example: "Test Flow"
+                flowShortDescription:
+                  type: string
+                  example: "Short Desc of a Flow"
+                flowDescription:
+                  type: string
+                  example: "Full Desc of a Flow"
+                flowInputs:
+                  type: array
+                  items:
+                    type: string
+                  example: [{ "inputName": "a", "inputType": "string","inputDescription": "gemmedat" }]
+                flowDocument:
+                  type: string
+                  example: {"foo": [1, 2, 3]}
+
+      responses:
+        200:
+          description: "Good"
+          content:
+            application/json:
+              schema:
+                properties:
+                  items:
+                    "$ref": "#/components/schemas/Flows"
+
+
+  /api/flows/{flowId}/triggers:
+    get:
+      tags:
+      - flows
+      parameters:
+       - name: flowId
+         in: path
+         required: true
+         schema:
+           type: string
+
+      summary: "Get Triggers for Flow"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Triggers"
+
+  /api/flows/{flowId}/run:
+    post:
+      tags:
+        - flows
+      parameters:
+       - name: flowId
+         in: path
+         required: true
+         schema:
+           type: string
+
+      requestBody:
+        description: "The Flow to Run"
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                flowInputs:
+                  type: array
+                  items:
+                    type: string
+                  example: [{ "inputName": "a", "inputValue": "string" }]
+
+      summary: Run a Flow
+      responses:
+        200:
+          description: "Good"
+          content:
+            application/json:
+              schema:
+                properties:
+                  items:
+                    "$ref": "#/components/schemas/Jobs"
+
+
+  /api/jobs:
+    get:
+      tags:
+      - jobs
+      summary: "Get all Jobs"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: Sample
+                properties:
+                  jobs:
+                    type: array
+                    items:
+                      "$ref": '#/components/schemas/Jobs'
+
+    post:
+      tags:
+      - jobs
+      summary: "Create a Job"
+      requestBody:
+        description: "The Flow to Run"
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": '#/components/schemas/Jobs'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: Sample
+                properties:
+                  jobs:
+                    type: array
+                    items:
+                      "$ref": '#/components/schemas/Jobs'
+
+
+
+    delete:
+      tags:
+      - jobs
+      summary: "Delete All Jobs"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                properties:
+                  DELETED:
+                    type: string
+                    example: "All Jobs!"
+
+  /api/jobs/{jobId}:
+    get:
+      tags:
+      - jobs
+      parameters:
+       - name: jobId
+         in: path
+         required: true
+         schema:
+           type: string
+
+      summary: "Get One Job"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Jobs"
+                
+    put:
+      tags:
+        - jobs
+      parameters:
+       - name: jobId
+         in: path
+         required: true
+         schema:
+           type: string
+      summary: Update a Flow
+      requestBody:
+        description: "The Job to Update"
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Jobs"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Jobs"
+    
+    delete:
+      tags:
+      - jobs
+      parameters:
+       - name: jobId
+         in: path
+         required: true
+         schema:
+           type: string
+
+      summary: "Delete One Job"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                properties:
+                  DELETED:
+                    type: string
+                    example: "8834b08a-feef-4f8d-bba9-c42d60ace00c"
+
+  /api/triggers:
+    get:
+      tags:
+      - triggers
+      summary: "Get all Triggers"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                properties:
+                  triggers:
+                    type: array
+                    items:
+                      properties:
+                        active:
+                          type: boolean
+                          example: True
+                        name:
+                          type: string
+                          example: "Weekly Application Restart"
+                        triggerId:
+                          type: string
+                          example: "96b606b4-cead-4b35-a2fd-e2c1c4d45501"
+
+    delete:
+      tags:
+      - triggers
+      summary: "Delete All Triggeres"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                properties:
+                  DELETED:
+                    type: string
+                    example: "All Triggers!"
+
+    post:
+      tags:
+        - triggers
+      summary: Create New Trigger
+      requestBody:
+        description: "The Trigger to create"
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Triggers"
+
+      responses:
+        200:
+          description: "Good"
+          content:
+            application/json:
+              schema:
+                properties:
+                  items:
+                    "$ref": "#/components/schemas/Triggers"
+
+
+
+
+  /api/triggers/{triggerId}:
+    get:
+      tags:
+      - triggers
+      parameters:
+       - name: triggerId
+         in: path
+         required: true
+         schema:
+           type: string
+
+      summary: "Get One Trigger"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Triggers"
+
+    delete:
+      tags:
+      - triggers
+      parameters:
+       - name: triggerId
+         in: path
+         required: true
+         schema:
+           type: string
+
+      summary: "Delete One Trigger"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                properties:
+                  DELETED:
+                    type: string
+                    example: "96b606b4-cead-4b35-a2fd-e2c1c4d45501"
+
+    put:
+      tags:
+        - triggers
+      parameters:
+       - name: triggerId
+         in: path
+         required: true
+         schema:
+           type: string
+      summary: Update a Trigger
+      requestBody:
+        description: "The Trigger to Update"
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Triggers"
+
+      responses:
+        200:
+          description: "Good"
+          content:
+            application/json:
+              schema:
+                properties:
+                  items:
+                    "$ref": "#/components/schemas/Triggers"
+
+    patch:
+      tags:
+        - triggers
+      parameters:
+       - name: triggerId
+         in: path
+         required: true
+         schema:
+           type: string
+      summary: Update a Trigger
+      requestBody:
+        description: "The Trigger to Update"
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Triggers"
+
+      responses:
+        200:
+          description: "Good"
+          content:
+            application/json:
+              schema:
+                properties:
+                  items:
+                    "$ref": "#/components/schemas/Triggers"
+
+
+
+
+components:
+
+  schemas:
+    Flows:
+      type: object
+      properties:
+        flowId:
+          type: string
+          example: "172e493f-f0ef-4d6e-9db5-ccd62757f36d"
+        flowName:
+          type: string
+          example: "test_update"
+        flowDescription:
+          type: string
+          example: "Longer decription of how the thing works etc"
+        flowDocument:
+          type: object
+          example: {"foo": [1,2,3]}
+        flowInputs:
+          type: array
+          items:
+            type: object
+            example: {"inputName": "payload1","inputType": "string" }
+        flowOutputs:
+          type: array
+          items:
+            type: string
+        flowShortDescription:
+          type: string
+          example: "Longer decription of how the thing works etc"
+
+    Jobs:
+      type: object
+      properties:
+        jobControlStatus:
+          type: string
+          example: "172e493f-f0ef-4d6e-9db5-ccd62757f36d"
+        jobCreateTime:
+          type: string
+          example: "Mon, 18 Jan 2021 15:05:56 GMT"
+        jobFlowInputs:
+          type: array
+          items:
+            type: string
+        jobId:
+          type: string
+          example: "8834b08a-feef-4f8d-bba9-c42d60ace00c"
+        jobName:
+          type: string
+          example: null
+        srcFlow:
+          type: string
+          example: "172e493f-f0ef-4d6e-9db5-ccd62757f36d"
+        srcFlowName:
+          type: string
+          example: "test_update"
+        jobStartTime:
+          type: string
+          example: null
+        jobStepStatus:
+          type: string
+          example: null
+        jobStopTime:
+          type: string
+          example: null
+        jobDuration:
+          type: number
+          example: 0.076026929
+        jobInfo:
+          type: string
+          example: "Example info"
+        jobStepID:
+          type: integer
+          example: 1
+        triggerId: 
+          type: string
+          example: "79304e95-c077-4ffd-92a3-0d133a08bfd9"
+
+
+
+    Triggers:
+      type: object
+      properties:
+        active:
+          type: boolean
+        flowIds:
+          type: array
+          items:
+            type: integer
+        inputs:
+          type: array
+          items:
+            type: object
+            example: {"inputName": "payload1","inputValue": "test" }
+        name:
+          type: string
+        triggerId:
+          type: string
+        triggerIds:
+          type: string
+        triggerLogic:
+          type: object
+          properties:
+            temporal-rule:
+              type: object
+              example: {"cron-expression":{"expression":"5 4 * * * ", "repeat-until": 1636002000}}
+
+

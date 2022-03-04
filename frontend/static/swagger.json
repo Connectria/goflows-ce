@@ -1,0 +1,138 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Skyline Go Flow API",
+    "description": "Go Flow Endpoint Automation API Documentation",
+    "version": "1.0",
+    "contact": {
+      "name": "Andrew Brady",
+      "email": "abrady@connectria.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://000.000.000.000:5001",
+      "description": "Mock JSON"
+    }
+  ],
+  "paths": {
+    "/api/test": {
+      "get": {
+        "tags": [
+          "Example"
+        ],
+        "summary": "This is an example GET request",
+        "description": "Test",
+        "parameters": [
+          {
+            "name": "name",
+            "description": "Example query parameter (?name=)",
+            "schema": {
+              "type": "string"
+            },
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Sample",
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Placeholder description"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Example"
+        ],
+        "summary": "This is an example POST request",
+        "description": "Test",
+        "requestBody": {
+          "description": "Required Body Parameters",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/parameters/parameter1"
+                  },
+                  {
+                    "$ref": "#/components/parameters/parameter2"
+                  },
+                  {
+                    "$ref": "#/components/parameters/parameter3"
+                  }
+                ]
+              },
+              "example": {
+                "parameter1": "test",
+                "parameter2": "example",
+                "parameter3": 1234
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Sample",
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Placeholder description"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "parameter1": {
+        "name": "parameter1",
+        "in": "query",
+        "description": "This is example parameter 1",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "parameter2": {
+        "name": "parameter2",
+        "in": "query",
+        "description": "This is example parameter 2",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "parameter3": {
+        "name": "parameter3",
+        "in": "query",
+        "description": "This is example parameter 3",
+        "schema": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}

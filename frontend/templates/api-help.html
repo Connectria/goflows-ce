@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+
+<iframe src="/swagger/" width="100%" style="position: absolute; height: 100%;" frameborder="0" allowfullscreen>
+  <p> 
+    <a href="https://developer.mozilla.org/en-US/docs/Glossary">
+       Fallback link for browsers that don't support iframes
+    </a>
+  </p>
+</iframe>
+
+
+
+
+<script>
+$('iframe').each(function(){
+    function injectCSS(){
+        $iframe.contents().find('head').append(
+            $('<link/>', { rel: 'stylesheet', href: '/static/css/swagger.css', type: 'text/css' })
+        );
+    }
+
+    var $iframe = $(this);
+    $iframe.on('load', injectCSS);
+    injectCSS();
+});
+</script>
+
+
+{% endblock %}
+
